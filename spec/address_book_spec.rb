@@ -46,6 +46,7 @@ RSpec.describe AddressBook do
     it "deletes passed entry" do
       expect(@book.entries.size).to eq(2)
       @book.remove_entry('Sarah Smith', '435.724.5567', 'eatchicken@home.com')
+      expect(@book.entries.size).to eq(1)
       @book.remove_entry('Henry Gomes', '568.435.9834', 'hungrylife@food.com')
 
       expect(@book.entries.size).to eq(0)
