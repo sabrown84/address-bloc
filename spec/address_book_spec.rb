@@ -33,11 +33,18 @@ RSpec.describe AddressBook do
       expect(new_entry.phone_number).to eq('010.012.1815')
       expect(new_entry.email).to eq('augusta.king@lovelace.com')
     end
-    it "deletes passed entry" do
-      expect(@book.entries.size).to eq(2)
-      @book.remove_entry('Sarah Smith', '435.724.5567', 'eatchicken@home.com')
-      expect(@book.entries.size).to eq(1)
-      @book.remove_entry('Henry Gomes', '568.435.9834', 'hungrylife@food.com')
-      expect(@book.entries.size).to eq(0)
-    end
+    describe "#remove_entry" do
+      before :each do
+        @book = AddressBook.new
+        @book.add_entry('Sarah Smith', '435.724.5567', 'eatchicken@home.com')
+        @book.add_entry('Henry Gomes', '568.435.9834', 'hungrylife@food.com')
+      end
+
+      it "deletes passed entry" do
+        expect(@book.entries.size).to eq(2)
+        @book.remove_entry('Sarah Smith', '435.724.5567', 'eatchicken@home.com')
+        @book.remove_entry('Henry Gomes', '568.435.9834', 'hungrylife@food.com')
+
+        expect(@book.entries.size).to eq(2)
+      end
 end
