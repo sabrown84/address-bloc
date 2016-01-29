@@ -14,12 +14,12 @@ require_relative '../models/address_book'
      puts "2 - Create an entry"
      puts "3 - Search for an entry"
      puts "4 - Import entries from a CSV"
-     puts "5 - Exit"
-     puts "6 - View Entry Number (n)"
+     puts "5 - View Entry Number (n)"
+     puts "6 - Exit"
      print "Enter your selection: "
 
      selection = gets.to_i
-     
+
 
      case selection
      when 1
@@ -39,24 +39,17 @@ require_relative '../models/address_book'
        read_csv
        main_menu
      when 5
-       puts "Good-bye!"
+       system "clear"
+       display_entry
+       main_menu
      when 6
-       puts "What is your entry number?"
-       number = gets.chomp
-       puts "Your entry:" + number
-
+       puts "Good-bye!"
        exit(0)
-
-         number > 6
-            puts "Invalid entry"
-            main_menu
-
-
-   else
-     system "clear"
-     puts "Sorry, that is not a valid input"
-     main_menu
-   end
+     else
+       system "clear"
+       puts "Sorry, that is not a valid input"
+       main_menu
+     end
   end
 
    def view_all_entries
@@ -88,10 +81,45 @@ require_relative '../models/address_book'
         puts "New entry created"
    end
 
+   def display_entry
+     puts "Please enter entry number:"
+     entry = gets.chomp.to_i
+     if entry < @address_book.entries.count
+       puts @address_book.entries[entry]
+     else
+       puts "invalid entry"
+       display_entry
+     end
+   end
    def search_entries
    end
 
    def read_csv
    end
+   def entry_submenu(entry)
+    # #16
+        puts "n - next entry"
+        puts "d - delete entry"
+        puts "e - edit this entry"
+        puts "m - return to main menu"
 
+    # #17
+        selection = gets.chomp
+
+        case selection
+    # #18
+        when "n"
+    # #19
+        when "d"
+        when "e"
+    # #20
+        when "m"
+          system "clear"
+          main_menu
+        else
+          system "clear"
+          puts "#{selection} is not a valid input"
+          entry_submenu(entry)
+        end
+      end
   end
