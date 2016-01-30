@@ -39,7 +39,7 @@ RSpec.describe AddressBook do
       expect(new_entry.email).to eq('augusta.king@lovelace.com')
     end
   end
-  describe "#import_from_csv" do
+    describe "#import_from_csv" do
        it "imports the correct number of entries" do
          book.import_from_csv("entries.csv")
          book_size = book.entries.size
@@ -183,4 +183,4 @@ RSpec.describe AddressBook do
 	       expect(entry).to be_nil
 	     end
      end
-end
+   end
