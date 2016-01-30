@@ -14,7 +14,9 @@ require_relative '../models/address_book'
      puts "2 - Create an entry"
      puts "3 - Search for an entry"
      puts "4 - Import entries from a CSV"
-     puts "5 - Exit"
+     puts "5 - View Entry Number (n)"
+     puts "6 - Detonate all entries"
+     puts "7 - Exit"
      print "Enter your selection: "
 
      selection = gets.to_i
@@ -37,6 +39,14 @@ require_relative '../models/address_book'
        read_csv
        main_menu
      when 5
+       system "clear"
+       display_entry
+       main_menu
+     when 6
+       system "clear"
+       delete_entry
+       main_menu
+     when 7
        puts "Good-bye!"
 
        exit(0)
@@ -65,19 +75,29 @@ require_relative '../models/address_book'
      puts "New AddressBloc Entry"
 
      print "Name: "
-    name = gets.chomp
-    print "Phone number: "
-    phone = gets.chomp
-    print "Email: "
-    email = gets.chomp
+     name = gets.chomp
+     print "Phone number: "
+     phone = gets.chomp
+     print "Email: "
+     email = gets.chomp
 
-    @address_book.add_entry(name, phone, email)
+     @address_book.add_entry(name, phone, email)
 
-        system "clear"
-        puts "New entry created"
+     system "clear"
+     puts "New entry created"
    end
 
-   def search_entries
+    def display_entry
+        puts "Please enter entry number:"
+        entry = gets.chomp.to_i
+        if entry < @address_book.entries.count
+          puts @address_book.entries[entry]
+        else
+          puts "invalid entry"
+          display_entry
+        end
+    end
+    def search_entries
      print "Search by name"
      name = gets.chomp
      match = @address_book.binary_search(name)
@@ -89,14 +109,14 @@ require_relative '../models/address_book'
      end
    end
    def entry_submenu(entry)
-        puts "n - next entry"
-        puts "d - delete entry"
-        puts "e - edit this entry"
-        puts "m - return to main menu"
+      puts "n - next entry"
+      puts "d - delete entry"
+      puts "e - edit this entry"
+      puts "m - return to main menu"
 
-        selection = gets.chomp
+      selection = gets.chomp
 
-        case selection
+      case selection
 
         when "n"
         when "d"
@@ -111,9 +131,9 @@ require_relative '../models/address_book'
           system "clear"
           puts "#{selection} is not a valid input"
           entry_submenu(entry)
-        end
       end
-   def read_csv
+    end
+    def read_csv
      print "Enter CSV file to import: "
      file_name = gets.chomp
      if file_name.empty?
